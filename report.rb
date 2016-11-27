@@ -18,7 +18,6 @@ class Mailer
     mail.template_id = mail_config['template_id']
 
     sg = SendGrid::API.new(api_key: mail_config['api_key'])
-    puts mail.to_json
     begin
       response = sg.client.mail._('send').post(request_body: mail.to_json)
     rescue Exception => e
