@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mysql2 (0.4.5)
+    ruby_http_client (3.0.0)
+    sendgrid-ruby (4.0.6)
+      ruby_http_client (~> 3.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mysql2
+  sendgrid-ruby
+
+BUNDLED WITH
+   1.13.6
