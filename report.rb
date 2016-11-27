@@ -5,7 +5,7 @@ require 'yaml'
 class Mailer
   include SendGrid
 
-  def send_mail
+  def send_mail(body)
     mail_config = Config.get_config['mail']
     today = DateTime.now.strftime('%d.%m.%Y')
     mail = Mail.new
@@ -14,7 +14,7 @@ class Mailer
     personalization = Personalization.new
     personalization.to = Email.new(email: mail_config['to_mail'])
     mail.personalizations = get_substitutions(personalization)
-    mail.contents = Content.new(type: 'text/html', value: 'Thank You.')
+    mail.contents = Content.new(type: 'text/html', value: body)
     mail.template_id = mail_config['template_id']
 
     sg = SendGrid::API.new(api_key: mail_config['api_key'])
@@ -91,4 +91,4 @@ class Config
 end
 
 mailer = Mailer.new
-mailer.send_mail
+mailer.send_mail(ARGV[0])
