@@ -1,6 +1,7 @@
 require 'sendgrid-ruby'
 require 'mysql2'
 require 'yaml'
+require 'money'
 
 class Mailer
   include SendGrid
@@ -41,15 +42,8 @@ class Mailer
   end
 
   def number_to_indian_currency(number)
-    if number != nil
-      string = number.to_s.split('.')
-      number = string[0].gsub(/(\d+)(\d{3})$/) { p = $2; "#{$1.reverse.gsub(/(\d{2})/, '\1,').reverse},#{p}" }
-      number = number.gsub(/^,/, '') + '.' + string[1] if string[1] # remove leading comma
-      number = number[1..-1] if number[0] == 44
-    else
-      number = 0
-    end
-    "₹ #{number}"
+    money = Money.from_amount(number.to_f, 'INR')
+    "₹ #{money.format}"
   end
 end
 
@@ -89,5 +83,6 @@ class Config
   end
 end
 
+I18n.enforce_available_locales = false
 mailer = Mailer.new
 mailer.send_mail(ARGV[0])

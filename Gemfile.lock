@@ -1,15 +1,21 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    i18n (0.7.0)
+    money (6.7.1)
+      i18n (>= 0.6.4, <= 0.7.0)
+      sixarm_ruby_unaccent (>= 1.1.1, < 2)
     mysql2 (0.4.5)
     ruby_http_client (3.0.0)
     sendgrid-ruby (4.0.6)
       ruby_http_client (~> 3.0.0)
+    sixarm_ruby_unaccent (1.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  money
   mysql2
   sendgrid-ruby
 
