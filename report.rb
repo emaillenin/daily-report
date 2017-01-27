@@ -32,18 +32,18 @@ class Mailer
     personalization.substitutions = Substitution.new(key: '-credit-sales-', value: number_to_indian_currency(queries.get_credit_sales))
     queries.get_top_3_customers.each_with_index do |top_customer, index|
       personalization.substitutions = Substitution.new(key: "-customer-#{index+1}-name-", value: top_customer['cust_name'])
-      personalization.substitutions = Substitution.new(key: "-customer-#{index+1}-sales-", value: top_customer['amount'])
+      personalization.substitutions = Substitution.new(key: "-customer-#{index+1}-sales-", value: number_to_indian_currency(top_customer['amount']))
     end
     queries.get_top_3_products.each_with_index do |top_product, index|
       personalization.substitutions = Substitution.new(key: "-product-#{index+1}-name-", value: top_product['prod_name'])
-      personalization.substitutions = Substitution.new(key: "-product-#{index+1}-sales-", value: top_product['amount'])
+      personalization.substitutions = Substitution.new(key: "-product-#{index+1}-sales-", value: number_to_indian_currency(top_product['amount']))
     end
     personalization
   end
 
   def number_to_indian_currency(number)
     money = Money.from_amount(number.to_f, 'INR')
-    "₹ #{money.format}"
+    "#{money.format}"
   end
 end
 
