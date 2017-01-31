@@ -13,7 +13,9 @@ class Mailer
     mail.from = Email.new(email: mail_config['from_mail'], name: 'Lessel')
     mail.subject = "Lessel Daily Report for #{today}"
     personalization = Personalization.new
-    personalization.to = Email.new(email: mail_config['to_mail'])
+    mail_config['to_mail'].split(',').each do |email|
+      personalization.to = Email.new(email: email)
+    end
     mail.personalizations = get_substitutions(personalization)
     mail.contents = Content.new(type: 'text/html', value: body)
     mail.template_id = mail_config['template_id']
